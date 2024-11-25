@@ -247,7 +247,7 @@ def main():
         return
 
     # 创建模型
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cuda' if torch.cuda.is_available() else 'mps')
     print(f"Using device: {device}")
     model = PointTransformer(num_class=num_classes, num_points=num_points).to(device)
 
@@ -258,11 +258,11 @@ def main():
     # 训练模型
     try:
         train_model(model, train_loader, criterion, optimizer, device, num_epochs)
-        torch.save(model.state_dict(), 'point_transformer.pth')
+        torch.save(model.state_dict(), 'models/baseline.pth')
         print("Training completed and model saved successfully")
     except Exception as e:
         print(f"Error during training: {e}")
-        torch.save(model.state_dict(), 'point_transformer_checkpoint.pth')
+        torch.save(model.state_dict(), 'models/baseline.pth')
         print(f"Training interrupted: {e}")
         print("Model checkpoint saved")
 
